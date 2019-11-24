@@ -20,14 +20,9 @@
     <div class="btn-group">
       <ng-template ngFor="" let-button="" [ngForOf]="buttons"
         ><a
+          [ngClass]="button.disableOn && button.disableOn(rowData) ? 'disabled' : ''"
           class="btn btn-icon {{ button.align }} {{ button.css }}"
-          [routerLink]="
-            button.actionLinkFunc
-              ? button.actionLinkFunc(rowData)
-              : button.actionLink
-              ? button.actionLink
-              : null
-          "
+          [routerLink]="button.actionLinkFunc ? button.actionLinkFunc(rowData) : button.actionLink ? button.actionLink : null"
           (click)="!button.actionLink &amp;&amp; button.action &amp;&amp; button.action(rowData)"
           ><span class="{{ button.icon }}">{{ button.title }}</span></a
         ></ng-template

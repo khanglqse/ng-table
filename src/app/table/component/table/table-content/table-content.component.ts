@@ -20,6 +20,7 @@ export class TableContentComponent implements OnInit {
   @Input() tbActions: ActionButtonComponent
   @Input() rowTotalTemplate: TableRowTotalTemplate
   @Input() colTemplates
+  @Input() isLoading: boolean
   @Output() changeOrderState: EventEmitter<SortState> = new EventEmitter<SortState>()
   sortOrder = SortOrder;
   constructor() { }
@@ -30,6 +31,7 @@ export class TableContentComponent implements OnInit {
   }
   sort(colIndex: number, e: Event){
     if((e.currentTarget as HTMLElement).classList.contains('sortable')){
+      this.sortState.index = colIndex
       const currentSortColumn = this.sortState.columnDef;
       // update direction
       if(currentSortColumn === this.settings.columns[colIndex].columnDef){

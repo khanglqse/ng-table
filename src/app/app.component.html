@@ -1,9 +1,12 @@
-<ng-table [settings]="settings" [dataSource]="data" (sortStateChange)="sortStateChange($event)" (pagingOptionChange)="pagingOptionChange($event)">
+<ng-table [isLoading]="loading" [settings]="settings" [filterModel$]="filterModel$" url="https://jsonplaceholder.typicode.com/posts" (sortStateChange)="sortStateChange($event)" 
+(pagingOptionChange)="pagingOptionChange($event)">
     <ng-template tableHeaderControl>
-        <button>1</button>
+        <button (click)="onHeaderButtonClick()">1</button>
         <button>2</button>
     </ng-template>
     <ng-template tableColumn for="no" let-data="rowData">
         <div style="background: gainsboro;">This is my custom column: {{data.no.sub}}</div>
     </ng-template>
 </ng-table>
+
+<input type="text" (change)="inputChange($event)">

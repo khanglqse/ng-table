@@ -1,22 +1,31 @@
 <!-- <ng-table-column [settings]="settings"></ng-table-column> -->
 
-<div class="table-container">
-    <!-- injected template  -->
-    <ng-table-header *ngIf="props.isHaveHeader" [headerControlTemplate]="headerControlTemplate" [headerTemplate]="headerTemplate" [settings]="settings"></ng-table-header>
-    <ng-table-column #tbColumn></ng-table-column>
-    <!-- table header -->
-    <ng-action-button [actionButtonSettings]="settings.actionButtons" #tbActionButtons [actBtnTemplate]="actBtnTemplate"></ng-action-button>
-    <ng-table-content 
-        [settings]="settings" [sortState]="sortState" [props]="props" [dataSource]="dataSource" [colTemplates]="colTemplates"
-        [tbColumn]="tbColumn" [tbActions]="tbActionButtons" [rowTotalTemplate]="rowTotalTemplate"
-        (changeOrderState)="handleOrderStateChange($event)"
-        > 
-    </ng-table-content>
-    <!-- table footeer -->
-    <div class="table-footer" *ngIf="footerTemplate && footerTemplate.templateRef">
-        <ng-container *ngTemplateOutlet="footerTemplate.templateRef"></ng-container>
+<div class="ng-table-container">
+    <div *ngIf="isLoading" class="table-loading">
+        <div class="loading-spinner">
+            <i>Refresh icon go here</i>
+        </div>
     </div>
-    <ng-table-navigation *ngIf="settings.pagination" (change)="onPagingOptionChange($event)"></ng-table-navigation>
+    <div class="main-container" [ngClass]="{'loading': isLoading}">
+        <!-- injected template  -->
+        <ng-table-header *ngIf="props.isHaveHeader" [headerControlTemplate]="headerControlTemplate" [headerTemplate]="headerTemplate" [settings]="settings"></ng-table-header>
+        <ng-table-column #tbColumn></ng-table-column>
+        <!-- table header -->
+        <ng-action-button [actionButtonSettings]="settings.actionButtons" #tbActionButtons [actBtnTemplate]="actBtnTemplate"></ng-action-button>
+        <ng-table-content 
+            [settings]="settings" [sortState]="sortState" [props]="props" [dataSource]="dataSource" [colTemplates]="colTemplates"
+            [tbColumn]="tbColumn" [tbActions]="tbActionButtons" [rowTotalTemplate]="rowTotalTemplate" [isLoading]="isLoading"
+            (changeOrderState)="handleOrderStateChange($event)"
+            > 
+        </ng-table-content>
+        <!-- table footeer -->
+        <div class="table-footer" *ngIf="footerTemplate && footerTemplate.templateRef">
+            <ng-container *ngTemplateOutlet="footerTemplate.templateRef"></ng-container>
+        </div>
+        <ng-table-navigation *ngIf="settings.pagination" (change)="onPagingOptionChange($event)"></ng-table-navigation>
+    </div>
+
+  
 </div>
 
 

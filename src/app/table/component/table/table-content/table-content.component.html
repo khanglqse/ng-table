@@ -10,9 +10,7 @@
           >
             <div class="flex">
               <span class="flex-fill">{{ column.title }}</span>
-              <span class="sort-icon">{{
-                sortState.order
-              }}</span>
+              <span *ngIf="sortState && sortState.index === i" class="sort-icon">{{sortState.order}}</span>
             </div>
           </th>
         </ng-container>
@@ -22,9 +20,9 @@
       </tr>
     </thead>
     <tbody #tbodyElement>
-      <ng-container *ngIf="!dataSource">
-        <tr [attr.colspan]="props.tableColSpan">
-          <span>Empty</span>
+      <ng-container *ngIf="!dataSource && (settings.showLoading && !isLoading)">
+        <tr >
+          <td class="text-center" [attr.colspan]="props.tableColSpan">No data available</td>
         </tr>
       </ng-container>
       <ng-container *ngIf="dataSource && dataSource.length > 0">
@@ -32,7 +30,6 @@
           <tr (click)="expandTableRow(item, tr, $event)" #tr class="{{settings.rows && settings.rows.trCssFunc && settings.rows.trCssFunc(item)}}">
             <!-- column content -->
             <ng-container *ngFor="let col of settings.columns">
-              {{col.data | json}}
               <ng-container
                 *ngTemplateOutlet="
                   tbColumn._columnTemplate;

@@ -10,6 +10,7 @@ import { TableColumnComponent } from './table/component/table/column/table-colum
 import { TableHeaderTemplate, TableHeaderControlTemplate, TableColumnTemplate, TableRowExpandTemplate, TableFooterTemplate, TableActionButtonTemplate, TableRowTotalTemplate } from './table/directive/table-directive.directive';
 import { TableContentComponent } from './table/component/table/table-content/table-content.component';
 import { TableNavigationComponent } from './table/component/table/navigation/table-navigation.component';
+import { FormsModule} from '@angular/forms'
 
 const routes: Routes  = [
   {
@@ -41,6 +42,7 @@ const routes: Routes  = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
