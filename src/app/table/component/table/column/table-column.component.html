@@ -69,7 +69,7 @@
           ></i>
           <ng-template [ngSwitchCase]="'datetime'">
             <div class="text-xs text-muted {{ colSetting.align }}">
-              {{ colData }}
+              {{ colData | date: colSetting.dateTimeFormat }}
             </div>
           </ng-template>
           <ng-template [ngSwitchCase]="'number'">

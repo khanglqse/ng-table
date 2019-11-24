@@ -29,12 +29,13 @@ export class AppComponent implements OnInit {
         { title: 'Age', data: x => x.age, columnDef: 'age'},
         { title: 'Title', data: x => x.title, columnDef: 'title'},
         { title: 'Language', data: x => x.language, columnDef: 'language'},
+        { title: 'Board date', data: x => x.joinDate, columnDef: 'joinDate', type: 'datetime',},
       ],
       rows: {
         trCssFunc: (data) => { return (data.name === 'khang' ? 'handsome-class' : 'not-handsome'); }
       },
       actionButtons: {
-        title: 'Test title',
+
         align: 'text-center',
         buttons: [
           { tooltip: 'khang', icon: 'fa', title: 'Edit test',  actionLinkFunc: (data) => this.checkActionLink(data) },
@@ -84,9 +85,9 @@ export class AppComponent implements OnInit {
 
 
 const testData = [
-  {no: {subProp: 1}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js'},
-  {no: {subProp: 2}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js'},
-  {no: {subProp: 3}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js'},
-  {no: {subProp: 4}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js'},
-  {no: {subProp: 5}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js'},
+  {no: {subProp: 1}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
+  {no: {subProp: 2}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date() },
+  {no: {subProp: 3}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date() },
+  {no: {subProp: 4}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date() },
+  {no: {subProp: 5}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date() },
 ]

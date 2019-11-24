@@ -32,7 +32,8 @@ export class ColumnSetting<T> implements IBaseSetting {
 	public columnDef: string;
 	public title: string;
 	public type?: 'text' | 'datetime' | 'number' | 'numberFormat' = 'text';
-	public dateTimeFormat?: { input?: string; output: string; } = { input: 'YYYY-MM-DDTHH:mm:ss', output: 'ddd DD/MM/YYYY hh:mma' };
+	// public dateTimeFormat?: { input?: string; output: string; } = { input: 'YYYY-MM-DDTHH:mm:ss', output: 'ddd DD/MM/YYYY hh:mma' };
+	public dateTimeFormat?: string ='short'
 	public numberFormat?: { decimal?: number; useProp?: string; };
 	public sortable?= true;
 	public triggerExpand?: boolean;
@@ -57,7 +58,7 @@ export class RowSetting<T> implements IBaseSetting {
 	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
 }
 export class ActionButtonSetting<T> implements IBaseSetting {
-	public title: string;
+	public title?: string = 'Actions';
 	public buttons: Array<ButtonSetting<T>>;
 	public css?: string;
 	public width?: number;
