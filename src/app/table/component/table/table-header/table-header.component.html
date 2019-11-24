@@ -1,0 +1,30 @@
+<ng-template #_headerTemplate>
+  <h3>
+    <ng-container
+      *ngTemplateOutlet="
+        headerTemplate ? headerTemplate.templateRef : _defaultHeaderTemplate
+      "
+    >
+    </ng-container>
+  </h3>
+</ng-template>
+
+<ng-template #_headerControlTemplate>
+  <div class="group-control" *ngIf="headerControlTemplate">
+    <ng-container
+      *ngTemplateOutlet="headerControlTemplate.templateRef"
+    ></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #_defaultHeaderTemplate>
+  <span>header icon</span>
+  <span>title</span>
+</ng-template>
+
+<ng-container>
+  <div class="table-header">
+    <ng-container *ngTemplateOutlet="_headerTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="_headerControlTemplate"></ng-container>
+  </div>
+</ng-container>

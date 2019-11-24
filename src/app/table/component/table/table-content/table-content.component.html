@@ -1,0 +1,75 @@
+<div class="table-responsive">
+  <table>
+    <thead>
+      <tr>
+        <ng-container *ngFor="let column of settings.columns; let i = index">
+          <th
+            class="{{column.align}} {{column.css}}" [attr.width]="column.width"
+            (click)="sort(i, $event)"
+            [ngClass]="{ sortable: column.sortable || (settings.sortable && column.sortable)}"
+          >
+            <div class="flex">
+              <span class="flex-fill">{{ column.title }}</span>
+              <span class="sort-icon">{{
+                sortState.order
+              }}</span>
+            </div>
+          </th>
+        </ng-container>
+        <ng-container *ngIf="props.isHaveActionButtons">
+          <th>{{ settings.actionButtons.title || "Actions" }}</th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody #tbodyElement>
+      <ng-container *ngIf="!dataSource">
+        <tr [attr.colspan]="props.tableColSpan">
+          <span>Empty</span>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="dataSource && dataSource.length > 0">
+        <ng-container *ngFor="let item of dataSource">
+          <tr (click)="expandTableRow(item, tr, $event)" #tr class="{{settings.rows && settings.rows.trCssFunc && settings.rows.trCssFunc(item)}}">
+            <!-- column content -->
+            <ng-container *ngFor="let col of settings.columns">
+              {{col.data | json}}
+              <ng-container
+                *ngTemplateOutlet="
+                  tbColumn._columnTemplate;
+                  context: {
+                    $implicit: col.data ? col.data(item) : null,
+                    rowData: item,
+                    colSetting: col,
+                    colTemplate: colTemplates[col.columnDef]
+                  }
+                "
+              >
+              </ng-container>
+              
+            </ng-container>
+            <!-- action buttons -->
+            <ng-container *ngIf="props.isHaveActionButtons">
+                <ng-container
+                  *ngTemplateOutlet="
+                    tbActions.actionButtonTemplate;
+                    context: {
+                      $implicit: item,
+                      buttons: settings.actionButtons.buttons
+                    }
+                  "
+                >
+                </ng-container>
+              </ng-container>
+          </tr>
+          <!-- row total -->
+          <tr *ngIf="props.haveRowTotal"> 
+            <ng-container *ngTemplateOutlet="rowTotalTemplate.templateRef">
+            </ng-container>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </tbody>
+
+    <!-- table footer -->
+  </table>
+</div>

@@ -1,0 +1,37 @@
+<ng-template #_actionButtonTemplate="" let-buttons="buttons" let-rowData="">
+  <ng-container
+    *ngTemplateOutlet="
+      actBtnTemplate
+        ? actBtnTemplate.templateRef
+        : _defaultActionButtonTemplate;
+      context: {
+        $implicit: rowData,
+        buttons: buttons
+      }
+    "
+  ></ng-container>
+</ng-template>
+<ng-template
+  #_defaultActionButtonTemplate=""
+  let-buttons="buttons"
+  let-rowData=""
+>
+  <td class="{{ actionButtonSettings.align }} {{ actionButtonSettings.css }}">
+    <div class="btn-group">
+      <ng-template ngFor="" let-button="" [ngForOf]="buttons"
+        ><a
+          class="btn btn-icon {{ button.align }} {{ button.css }}"
+          [routerLink]="
+            button.actionLinkFunc
+              ? button.actionLinkFunc(rowData)
+              : button.actionLink
+              ? button.actionLink
+              : null
+          "
+          (click)="!button.actionLink &amp;&amp; button.action &amp;&amp; button.action(rowData)"
+          ><span class="{{ button.icon }}">{{ button.title }}</span></a
+        ></ng-template
+      >
+    </div>
+  </td>
+</ng-template>
