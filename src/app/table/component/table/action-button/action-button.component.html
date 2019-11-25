@@ -18,7 +18,7 @@
 >
   <td class="{{ actionButtonSettings.align }} {{ actionButtonSettings.css }}">
     <div class="btn-group">
-      <ng-template ngFor="" let-button="" [ngForOf]="buttons"
+      <ng-template *ngFor="let button of buttons">
         ><a
           [ngClass]="button.disableOn && button.disableOn(rowData) ? 'disabled' : ''"
           class="btn btn-icon {{ button.align }} {{ button.css }}"
