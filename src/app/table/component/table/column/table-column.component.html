@@ -26,11 +26,11 @@
 >
   <td
     class="{{ colSetting.css }}"
-    [ngClass]="{'expand-cell': (colSetting.isExpandableFunc &amp;&amp; colSetting.isExpandableFunc(rowData)) || colSetting.triggerExpand}"
+    [ngClass]="{'expand-cell': (colSetting.triggerExpandFunc && colSetting.triggerExpandFunc(rowData)) || colSetting.triggerExpand}"
   >
     <i
       class="expand-control mdi mdi-menu-right text-big"
-      *ngIf="(colSetting.isExpandableFunc &amp;&amp; colSetting.isExpandableFunc(rowData)) || (colSetting.triggerExpand &amp;&amp; colSetting.triggerExpandStyle == 'arrow')"
+      *ngIf="(colSetting.triggerExpandFunc && colSetting.triggerExpandFunc(rowData)) || (colSetting.triggerExpand && colSetting.triggerExpandIcon == 'arrow')"
     ></i>
     <div class="{{ colSetting.align }}">
       <ng-container
@@ -55,17 +55,17 @@
   <ng-container [ngSwitch]="colSetting.type">
     <td
       class="{{ colSetting.css }}"
-      [ngClass]="{'expand-cell': (colSetting.isExpandableFunc &amp;&amp; colSetting.isExpandableFunc(rowData)) || colSetting.triggerExpand}"
+      [ngClass]="{'expand-cell': (colSetting.triggerExpandFunc && colSetting.triggerExpandFunc(rowData)) || colSetting.triggerExpand}"
     >
       <div class="d-flex">
         <div class="flex-fill {{ colSetting.align }}">
           <i
             class="expand-control flex-fill fa fa-plus"
-            *ngIf="(colSetting.isExpandableFunc &amp;&amp; colSetting.isExpandableFunc(rowData)) || colSetting.triggerExpand &amp;&amp; colSetting.triggerExpandStyle == 'plus-minus'"
+            *ngIf="(colSetting.triggerExpandFunc && colSetting.triggerExpandFunc(rowData)) || colSetting.triggerExpand && colSetting.triggerExpandIcon == 'plus-minus'"
           ></i
           ><i
             class="expand-control flex-fill mdi mdi-menu-down text-big"
-            *ngIf="(colSetting.isExpandableFunc &amp;&amp; colSetting.isExpandableFunc(rowData)) || colSetting.triggerExpand &amp;&amp; colSetting.triggerExpandStyle == 'arrow'"
+            *ngIf="(colSetting.triggerExpandFunc && colSetting.triggerExpandFunc(rowData)) || colSetting.triggerExpand && colSetting.triggerExpandIcon == 'arrow'"
           ></i>
           <ng-template [ngSwitchCase]="'datetime'">
             <div class="text-xs text-muted {{ colSetting.align }}">

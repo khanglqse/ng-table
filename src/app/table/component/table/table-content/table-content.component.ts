@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ApplicationRef, ViewChild, ElementRef } from '@angular/core';
 import { TableSetting, TableProps } from 'src/app/table/models/settings.model';
 import { SortState, SortOrder } from 'src/app/table/models/sort-order.model';
 import { TableColumnComponent } from '../column/table-column.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
-import { TableRowTotalTemplate } from 'src/app/table/directive/table-directive.directive';
+import { TableRowTotalTemplate, TableRowExpandTemplate } from 'src/app/table/directive/table-directive.directive';
 
 @Component({
   selector: 'ng-table-content',
@@ -12,18 +12,24 @@ import { TableRowTotalTemplate } from 'src/app/table/directive/table-directive.d
 })
 export class TableContentComponent implements OnInit {
 
+  @Input() rowTotalTemplate: TableRowTotalTemplate
+  @Input() rowExpandTemplate: TableRowExpandTemplate
+
   @Input() settings: TableSetting<any>
   @Input() sortState: SortState
   @Input() props : TableProps
   @Input() dataSource: any[]
   @Input() tbColumn: TableColumnComponent
   @Input() tbActions: ActionButtonComponent
-  @Input() rowTotalTemplate: TableRowTotalTemplate
   @Input() colTemplates
   @Input() isLoading: boolean
   @Output() changeOrderState: EventEmitter<SortState> = new EventEmitter<SortState>()
+
+  @ViewChild('tbodyEl', {static: false}) tbodyElement: ElementRef
   sortOrder = SortOrder;
-  constructor() { }
+  constructor(
+    // private _appRef = ApplicationRef
+  ) { }
 
   ngOnInit() {
     console.log(this.tbColumn._columnTemplate)
@@ -46,7 +52,32 @@ export class TableContentComponent implements OnInit {
     }
   }
 
-  expandTableRow(item, el, event){
+  tableRowClickHandler(rowData: any, rowEl: HTMLElement, index, event){
+    if(!this.settings.rows.triggerExpand && !this.settings.rows.triggerExpandFunc) return
 
+    const rowEmbeddedView = this.rowExpandTemplate.templateRef.createEmbeddedView({...rowData})
+    const templateEl = rowEmbeddedView.rootNodes[0] as HTMLElement
+    if(templateEl.tagName !== 'TR'){
+      console.error('Please use <tr> as root element for RowExpandTemplate')
+    } else {
+      templateEl.setAttribute(`row-expanded`, '')
+      this.handleCollapseRow(rowEl, templateEl);
+      
+    }
+
+  }
+  insertElementAfterRow(tRow: HTMLElement, templateEl: HTMLElement) {
+    tRow.insertAdjacentElement('afterend', templateEl)
+  }
+
+  handleCollapseRow(tRow: HTMLElement, templateEl: HTMLElement){
+    const {triggerCloseExpanded, triggerCloseExpandedFunc} = this.settings.rows
+    if(tRow.nextElementSibling.attributes.getNamedItem('row-expanded')){
+      if(triggerCloseExpanded ||  triggerCloseExpandedFunc){
+        tRow.nextElementSibling.remove()
+      }
+    } else {
+      tRow.insertAdjacentElement('afterend', templateEl)
+    }
   }
 }

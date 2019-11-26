@@ -15,7 +15,7 @@
         <ng-table-content 
             [settings]="settings" [sortState]="sortState" [props]="props" [dataSource]="dataSource" [colTemplates]="colTemplates"
             [tbColumn]="tbColumn" [tbActions]="tbActionButtons" [rowTotalTemplate]="rowTotalTemplate" [isLoading]="isLoading"
-            (changeOrderState)="handleOrderStateChange($event)"
+            (changeOrderState)="handleOrderStateChange($event)" [rowExpandTemplate]="rowExpandTemplate"
             > 
         </ng-table-content>
         <!-- table footeer -->

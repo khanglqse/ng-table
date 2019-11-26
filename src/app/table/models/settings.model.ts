@@ -4,6 +4,8 @@ export interface IBaseSetting {
 	/** Css class apply to TD */
 	css?: string;
 	align?: 'text-left' | 'text-right' | 'text-center';
+	width?: string
+	height?: string
 }
 
 export class TableSetting<T> {
@@ -20,6 +22,7 @@ export class TableSetting<T> {
 	constructor(setting: Partial<TableSetting<T>>) {
 		Object.assign(this, setting);
 		this.actionButtons = new ActionButtonSetting(this.actionButtons);
+		this.rows = new RowSetting(this.rows)
 		for (const k in this.columns) {
 			if (this.columns[k]) {
 				this.columns[k] = new ColumnSetting<T>(this.columns[k]);
@@ -37,11 +40,15 @@ export class ColumnSetting<T> implements IBaseSetting {
 	public numberFormat?: { decimal?: number; useProp?: string; };
 	public sortable?= true;
 	public triggerExpand?: boolean;
-	public triggerExpandStyle?: 'arrow' | 'plus-minus' = 'arrow';
+	public triggerExpandIcon?: 'arrow' | 'plus-minus' = 'arrow';
 	public css?: string;
-	public width?: number | string;
+	public width?: string;
+	public height?: string;
+
 	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
-	public isExpandableFunc?: (rowData: T) => boolean;
+	public triggerExpandFunc?: (rowData: T) => boolean;
+	public triggerCloseExpanded? = true
+	public triggerCloseExpandedFunc?: (rowData: T) => boolean
 	/** Return data that display in table */
 	public data?: (data: T) => any;
 	/** Func return sort field data */
@@ -54,14 +61,24 @@ export class ColumnSetting<T> implements IBaseSetting {
 export class RowSetting<T> implements IBaseSetting {
 	public trCssFunc?: (rowData: T) => string;
 	public css?: string;
-	public width?: number | string;
+	public width?: string;
+	public height?: string;
 	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
+	public triggerExpand?: boolean = false
+	public triggerExpandFunc?: (rowData: T) => boolean
+	public triggerCloseExpanded? = true
+	public triggerCloseExpandedFunc?: (rowData: T) => boolean
+	constructor(setting: Partial<RowSetting<T>>){
+		Object.assign(this, setting)
+	}
+
 }
 export class ActionButtonSetting<T> implements IBaseSetting {
 	public title?: string = 'Actions';
 	public buttons: Array<ButtonSetting<T>>;
 	public css?: string;
-	public width?: number;
+	public width?: string;
+	public height?: string;
 	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
 
 	constructor(setting: Partial<ActionButtonSetting<T>>) {
@@ -80,7 +97,9 @@ export class ButtonSetting<T> implements IBaseSetting{
 	public actionLink?: any[];
 	public title?: string
 	public css?: string;
-	public width?: number;
+	public width?: string;
+	public height?: string;
+
 	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
 	/** Tooltip for disabled button when un-authorized */
 	public unAuthorizedMessage?= 'You may ask your Manager to update the settings';

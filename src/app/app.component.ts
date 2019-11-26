@@ -32,7 +32,8 @@ export class AppComponent implements OnInit {
         { title: 'Board date', data: x => x.joinDate, columnDef: 'joinDate', type: 'datetime',},
       ],
       rows: {
-        trCssFunc: (data) => { return (data.name === 'khang' ? 'handsome-class' : 'not-handsome'); }
+        trCssFunc: (data) => { return (data.name === 'khang' ? 'handsome-class' : 'not-handsome'); },
+        triggerExpand: true
       },
       actionButtons: {
 

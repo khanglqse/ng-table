@@ -10,7 +10,8 @@ import { TableColumnComponent } from './table/component/table/column/table-colum
 import { TableHeaderTemplate, TableHeaderControlTemplate, TableColumnTemplate, TableRowExpandTemplate, TableFooterTemplate, TableActionButtonTemplate, TableRowTotalTemplate } from './table/directive/table-directive.directive';
 import { TableContentComponent } from './table/component/table/table-content/table-content.component';
 import { TableNavigationComponent } from './table/component/table/navigation/table-navigation.component';
-import { FormsModule} from '@angular/forms'
+import { FormsModule} from '@angular/forms';
+import { OtherComponnetComponent } from './app/other-componnet/other-componnet.component'
 
 const routes: Routes  = [
   {
@@ -37,7 +38,8 @@ const routes: Routes  = [
     TableActionButtonTemplate,
     TableRowTotalTemplate,
     TableContentComponent,
-    TableNavigationComponent
+    TableNavigationComponent,
+    OtherComponnetComponent
   ],
   imports: [
     BrowserModule,

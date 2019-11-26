@@ -9,18 +9,7 @@ import { TableSetting } from 'src/app/table/models/settings.model';
 })
 export class TableColumnComponent implements OnInit {
 
-  public colTemplates: { [key: string]: TableColumnTemplate } = {};
-  @ContentChildren(TableColumnTemplate)
-	set setColumnTemplates(columnTemplates: Array<TableColumnTemplate>) {
-		if (!columnTemplates || columnTemplates.length === 0) {
-			this.colTemplates = {};
-			return;
-		}
-
-		columnTemplates.forEach(temp => {
-			this.colTemplates[temp.for] = temp;
-		});
-	};
+  
 
   @ViewChild("_columnTemplate", {static: false}) public _columnTemplate;
 
