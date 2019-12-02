@@ -25,13 +25,8 @@
   let-colTemplate="colTemplate"
 >
   <td
-    class="{{ colSetting.css }}"
-    [ngClass]="{'expand-cell': (colSetting.triggerExpandFunc && colSetting.triggerExpandFunc(rowData)) || colSetting.triggerExpand}"
-  >
-    <i
-      class="expand-control mdi mdi-menu-right text-big"
-      *ngIf="(colSetting.triggerExpandFunc && colSetting.triggerExpandFunc(rowData)) || (colSetting.triggerExpand && colSetting.triggerExpandIcon == 'arrow')"
-    ></i>
+    class="{{ colSetting.css }}">
+    <i class="expand-control mdi mdi-menu-right text-big"></i>
     <div class="{{ colSetting.align }}">
       <ng-container
         *ngTemplateOutlet="
@@ -39,7 +34,8 @@
           context: {
             $implicit: colData,
             rowData: rowData,
-            colSetting: colSetting
+            colSetting: colSetting,
+            triggerExpand: triggerExpand()
           }
         "
       ></ng-container>
@@ -53,10 +49,7 @@
   let-rowData="rowData"
 >
   <ng-container [ngSwitch]="colSetting.type">
-    <td
-      class="{{ colSetting.css }}"
-      [ngClass]="{'expand-cell': (colSetting.triggerExpandFunc && colSetting.triggerExpandFunc(rowData)) || colSetting.triggerExpand}"
-    >
+    <td class="{{ colSetting.css }}" >
       <div class="d-flex">
         <div class="flex-fill {{ colSetting.align }}">
           <i

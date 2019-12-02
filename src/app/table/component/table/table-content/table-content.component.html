@@ -27,7 +27,7 @@
       </ng-container>
       <ng-container *ngIf="dataSource && dataSource.length > 0">
         <ng-container *ngFor="let item of dataSource; let i = index">
-          <tr (click)="tableRowClickHandler(item, tr, i, $event)" #tr class="{{settings.rows && settings.rows.trCssFunc && settings.rows.trCssFunc(item)}}">
+          <tr (click)="tableRowClickHandler(item, tr)" #tr class="{{settings.rows && settings.rows.trCssFunc && settings.rows.trCssFunc(item)}}">
             <!-- column content -->
             <ng-container *ngFor="let col of settings.columns">
               <ng-container

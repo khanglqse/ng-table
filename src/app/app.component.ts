@@ -81,6 +81,7 @@ export class AppComponent implements OnInit {
   inputChange(e){
     this.filterModel$.next({name: e.target.value})
   }
+ 
 }
 
 

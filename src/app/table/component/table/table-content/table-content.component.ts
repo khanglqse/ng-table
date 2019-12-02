@@ -52,7 +52,8 @@ export class TableContentComponent implements OnInit {
     }
   }
 
-  tableRowClickHandler(rowData: any, rowEl: HTMLElement, index, event){
+  tableRowClickHandler(rowData: any, rowEl: HTMLElement, event){
+    console.log('tableRowHandle')
     if(!this.settings.rows.triggerExpand && !this.settings.rows.triggerExpandFunc) return
 
     const rowEmbeddedView = this.rowExpandTemplate.templateRef.createEmbeddedView({...rowData})
@@ -64,10 +65,7 @@ export class TableContentComponent implements OnInit {
       this.handleCollapseRow(rowEl, templateEl);
       
     }
-
-  }
-  insertElementAfterRow(tRow: HTMLElement, templateEl: HTMLElement) {
-    tRow.insertAdjacentElement('afterend', templateEl)
+    // event.stopPropagation()
   }
 
   handleCollapseRow(tRow: HTMLElement, templateEl: HTMLElement){
