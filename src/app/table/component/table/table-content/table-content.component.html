@@ -19,15 +19,15 @@
         </ng-container>
       </tr>
     </thead>
-    <tbody #tbodyElement>
+    <tbody #tbodyEl>
       <ng-container *ngIf="!dataSource && (settings.showLoading && !isLoading)">
         <tr >
           <td class="text-center" [attr.colspan]="props.tableColSpan">No data available</td>
         </tr>
       </ng-container>
       <ng-container *ngIf="dataSource && dataSource.length > 0">
-        <ng-container *ngFor="let item of dataSource">
-          <tr (click)="expandTableRow(item, tr, $event)" #tr class="{{settings.rows && settings.rows.trCssFunc && settings.rows.trCssFunc(item)}}">
+        <ng-container *ngFor="let item of dataSource; let i = index">
+          <tr (click)="tableRowClickHandler(item, tr)" #tr class="{{settings.rows && settings.rows.trCssFunc && settings.rows.trCssFunc(item)}}">
             <!-- column content -->
             <ng-container *ngFor="let col of settings.columns">
               <ng-container

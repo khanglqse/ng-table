@@ -1,33 +1,28 @@
-import { Component, OnInit, ContentChildren, Input, ViewChild } from '@angular/core';
-import { TableColumnTemplate } from 'src/app/table/directive/table-directive.directive';
+import { Component, OnInit, ContentChildren, Input, ViewChild, Output, EventEmitter, HostListener, ContentChild } from '@angular/core';
+import { TableColumnTemplate, TableRowExpandTemplate } from 'src/app/table/directive/table-directive.directive';
 import { TableSetting } from 'src/app/table/models/settings.model';
+import { find } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'ng-table-column',
   templateUrl: './table-column.component.html',
   styleUrls: ['./table-column.component.sass']
 })
-export class TableColumnComponent implements OnInit {
+export class TableColumnComponent {
 
-  public colTemplates: { [key: string]: TableColumnTemplate } = {};
-  @ContentChildren(TableColumnTemplate)
-	set setColumnTemplates(columnTemplates: Array<TableColumnTemplate>) {
-		if (!columnTemplates || columnTemplates.length === 0) {
-			this.colTemplates = {};
-			return;
-		}
+  @ViewChild("_columnTemplate", {static: true}) public _columnTemplate;
 
-		columnTemplates.forEach(temp => {
-			this.colTemplates[temp.for] = temp;
-		});
-	};
-
-  @ViewChild("_columnTemplate", {static: false}) public _columnTemplate;
-
-  @Input() settings: TableSetting<any>  
+  
+  @Input() rowExpandTemplate: TableRowExpandTemplate
+  @Output() onTriggerExpand = new EventEmitter<{tRowEl, rowData}>();
   constructor() { }
 
-  ngOnInit() {
+  triggerExpand(tdElement, rowData){
+    this.onTriggerExpand.emit({tRowEl: this._getTRowElement(tdElement), rowData})
+    }
+  private _getTRowElement(tdElement: HTMLElement) {
+    return tdElement.parentElement
   }
 
 }

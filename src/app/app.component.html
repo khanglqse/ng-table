@@ -4,8 +4,15 @@
         <button (click)="onHeaderButtonClick()">1</button>
         <button>2</button>
     </ng-template>
-    <ng-template tableColumn for="no" let-data="rowData">
-        <div style="background: gainsboro;">This is my custom column: {{data.no.subProp + data.age}}</div>
+    <ng-template #column tableColumn for="no" let-data="rowData" let-triggerExpand="triggerExpand()" let-col="col">
+        <div (click)="triggerExpand" style="background: gainsboro;">This is my custom column: {{data.no.subProp + data.age}}</div>
+    </ng-template>
+    <ng-template tableRowExpand let-rowData="rowData">
+        <tr>
+            <td [colSpan]="settings.columns.length + 1" class="text-center">
+                <ng-other-componnet [name]="rowData"></ng-other-componnet>
+            </td>
+        </tr>
     </ng-template>
 </ng-table>
 

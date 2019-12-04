@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  data;
+  data = []
   title = 'table';
   settings: TableSetting<any>
   loading: boolean;
@@ -25,14 +25,15 @@ export class AppComponent implements OnInit {
       header: { title: 'This is title' },
       columns: [
         { title: 'No', data: x => x.no.subProp, columnDef: 'no', align: 'text-left' },
-        { title: 'Name', data: x => x.name, columnDef: 'name' },
+        { title: 'Name', data: x => x.name, columnDef: 'name',colSpan: 2, colSpanFunc: (data) => {return 1}},
         { title: 'Age', data: x => x.age, columnDef: 'age'},
         { title: 'Title', data: x => x.title, columnDef: 'title'},
         { title: 'Language', data: x => x.language, columnDef: 'language'},
-        { title: 'Board date', data: x => x.joinDate, columnDef: 'joinDate', type: 'datetime',},
+        { title: 'Board date', data: x => x.joinDate, columnDef: 'joinDate', type: 'datetime', dateTimeFormat: 'long'},
       ],
       rows: {
-        trCssFunc: (data) => { return (data.name === 'khang' ? 'handsome-class' : 'not-handsome'); }
+        trCssFunc: (data) => { return (data.name === 'khang' ? 'handsome-class' : 'not-handsome'); },
+        // triggerExpand: true
       },
       actionButtons: {
 
@@ -65,6 +66,10 @@ export class AppComponent implements OnInit {
     console.log(e)
   }
   pagingOptionChange(e){
+    this.data =  [
+      {no: {subProp: 1}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
+
+    ] 
     console.log(e)
   }
   onHeaderButtonClick(){
@@ -80,6 +85,10 @@ export class AppComponent implements OnInit {
   inputChange(e){
     this.filterModel$.next({name: e.target.value})
   }
+  a(aa){
+    console.log(aa)
+  }
+ 
 }
 
 

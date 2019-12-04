@@ -56,6 +56,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   public rowExpandTemplate: TableRowExpandTemplate;
 
   public colTemplates: { [key: string]: TableColumnTemplate } = {};
+  columnTriggerExpand$ = new Subject;
 
   @ContentChildren(TableColumnTemplate)
   set setColumnTemplates(columnTemplates: Array<TableColumnTemplate>) {
@@ -90,7 +91,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   filterModel: any = {}
   sortState: SortState = new SortState();
 
-  private unsubscribe$ = new Subject<void>()
+  private _unsubscribe$ = new Subject<void>()
   constructor(
     private _appRef: ApplicationRef,
     private _httpClient: HttpClient,
@@ -108,13 +109,13 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   }
   registerObserver() {
     if(this.filterModel$){
-      this.filterModel$.pipe(takeUntil(this.unsubscribe$)).subscribe(filter => {
+      this.filterModel$.pipe(takeUntil(this._unsubscribe$)).subscribe(filter => {
         this.filterModel = filter
         this.shouldFetchData() && this.fetchData()
       })
     }
     if(this.sortState$){
-      this.sortState$.pipe(takeUntil(this.unsubscribe$)).subscribe(sortState => {
+      this.sortState$.pipe(takeUntil(this._unsubscribe$)).subscribe(sortState => {
         this.sortState = sortState
         this.shouldFetchData() && this.fetchData()
       })
@@ -177,8 +178,11 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
     this.pagingOptions = new PagingSetting()
   }
 
+  handleColumnTriggerExpand(eleObj){
+    this.columnTriggerExpand$.next(eleObj)
+  }
   ngOnDestroy() {
-    this.unsubscribe$.next()
-    this.unsubscribe$.complete()
+    this._unsubscribe$.next()
+    this._unsubscribe$.complete()
   }
 }
