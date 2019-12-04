@@ -9,10 +9,11 @@
     <div class="main-container" [ngClass]="{'loading': isLoading}">
         <!-- injected template  -->
         <ng-table-header *ngIf="props.isHaveHeader" [headerControlTemplate]="headerControlTemplate" [headerTemplate]="headerTemplate" [settings]="settings"></ng-table-header>
-        <ng-table-column #tbColumn [rowExpandTemplate]="rowExpandTemplate"></ng-table-column>
+        <ng-table-column (onTriggerExpand)="handleColumnTriggerExpand($event)" #tbColumn></ng-table-column>
         <!-- table header -->
         <ng-action-button [actionButtonSettings]="settings.actionButtons" #tbActionButtons [actBtnTemplate]="actBtnTemplate"></ng-action-button>
         <ng-table-content 
+            [columnTriggerExpand$] = "columnTriggerExpand$"
             [settings]="settings" [sortState]="sortState" [props]="props" [dataSource]="dataSource" [colTemplates]="colTemplates"
             [tbColumn]="tbColumn" [tbActions]="tbActionButtons" [rowTotalTemplate]="rowTotalTemplate" [isLoading]="isLoading"
             (changeOrderState)="handleOrderStateChange($event)" [rowExpandTemplate]="rowExpandTemplate"

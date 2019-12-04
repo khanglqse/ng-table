@@ -41,6 +41,7 @@ export class ColumnSetting<T> implements IBaseSetting {
 	public sortable?= true;
 	public triggerExpand?: boolean;
 	public triggerExpandIcon?: 'arrow' | 'plus-minus' = 'arrow';
+
 	public css?: string;
 	public width?: string;
 	public height?: string;
@@ -49,6 +50,10 @@ export class ColumnSetting<T> implements IBaseSetting {
 	public triggerExpandFunc?: (rowData: T) => boolean;
 	public triggerCloseExpanded? = true
 	public triggerCloseExpandedFunc?: (rowData: T) => boolean
+	public colSpan?: number = 1
+	public colSpanFunc?: (rowData) => number 
+	public rowSpan?: number = 1
+	public rowSpanFunc?: (rowData) => number 
 	/** Return data that display in table */
 	public data?: (data: T) => any;
 	/** Func return sort field data */
@@ -64,6 +69,7 @@ export class RowSetting<T> implements IBaseSetting {
 	public width?: string;
 	public height?: string;
 	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
+
 	public triggerExpand?: boolean = false
 	public triggerExpandFunc?: (rowData: T) => boolean
 	public triggerCloseExpanded? = true

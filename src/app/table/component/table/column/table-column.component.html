@@ -5,7 +5,7 @@
   let-colSetting="colSetting"
   let-colTemplate="colTemplate"
 >
-  <ng-container
+  <ng-container #tRow
     *ngTemplateOutlet="
       colTemplate ? _customColumnTemplate : _defaultColumnTemplate;
       context: {
@@ -24,7 +24,8 @@
   let-rowData="rowData"
   let-colTemplate="colTemplate"
 >
-  <td
+  <td #td
+    
     class="{{ colSetting.css }}">
     <i class="expand-control mdi mdi-menu-right text-big"></i>
     <div class="{{ colSetting.align }}">
@@ -35,7 +36,8 @@
             $implicit: colData,
             rowData: rowData,
             colSetting: colSetting,
-            triggerExpand: triggerExpand()
+            col: this,
+            triggerExpand: this.triggerExpand.bind(this,td, rowData)
           }
         "
       ></ng-container>
@@ -49,7 +51,11 @@
   let-rowData="rowData"
 >
   <ng-container [ngSwitch]="colSetting.type">
-    <td class="{{ colSetting.css }}" >
+    <!-- {{(colSetting.colSpanFunc && colSetting.colSpanFunc(rowData))}} -->
+    <!-- {{colSetting.colSpan}} -->
+    <td class="{{ colSetting.css }}"
+    [attr.colSpan] ="(colSetting.colSpanFunc && colSetting.colSpanFunc(rowData)) || colSetting.colSpan"
+    [attr.rowSpan] ="(colSetting.rowSpanFunc && colSetting.rowSpanFunc(rowData)) || colSetting.rowSpan" >
       <div class="d-flex">
         <div class="flex-fill {{ colSetting.align }}">
           <i
