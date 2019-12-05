@@ -24,12 +24,12 @@ export class AppComponent implements OnInit {
     this.settings = {
       header: { title: 'This is title' },
       columns: [
-        { title: 'No', data: x => x.no.subProp, columnDef: 'no', align: 'text-left' },
-        { title: 'Name', data: x => x.name, columnDef: 'name',colSpan: 2, colSpanFunc: (data) => {return 1}},
-        { title: 'Age', data: x => x.age, columnDef: 'age'},
-        { title: 'Title', data: x => x.title, columnDef: 'title'},
-        { title: 'Language', data: x => x.language, columnDef: 'language'},
-        { title: 'Board date', data: x => x.joinDate, columnDef: 'joinDate', type: 'datetime', dateTimeFormat: 'long'},
+        { title: 'No', prop: m => m.no.subProp, columnDef: 'no', align: 'text-left' },
+        { title: 'Name', prop: m => m.name, columnDef: 'name',colSpan: 2, colSpanFunc: (data) => {return 1}},
+        { title: 'Age', prop: m => m.age, columnDef: 'age'},
+        { title: 'Title', prop: m => m.title, columnDef: 'title'},
+        { title: 'Language', prop: m => m.language, columnDef: 'language'},
+        { title: 'Board date', prop: m => m.joinDate, columnDef: 'joinDate', type: 'datetime', dateTimeFormat: 'long'},
       ],
       rows: {
         trCssFunc: (data) => { return (data.name === 'khang' ? 'handsome-class' : 'not-handsome'); },
@@ -67,7 +67,11 @@ export class AppComponent implements OnInit {
   }
   pagingOptionChange(e){
     this.data =  [
-      {no: {subProp: 1}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
+      {no: {subProp: 1}, name:'teo', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
+      {no: {subProp: 1}, name:'teo', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
+      {no: {subProp: 1}, name:'teo', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
+      {no: {subProp: 1}, name:'teo', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
+      {no: {subProp: 1}, name:'teo', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
 
     ] 
     console.log(e)

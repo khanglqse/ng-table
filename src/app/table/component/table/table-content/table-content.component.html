@@ -34,7 +34,7 @@
                 *ngTemplateOutlet="
                   tbColumn._columnTemplate;
                   context: {
-                    $implicit: col.data ? col.data(item) : null,
+                    $implicit: col.prop ? col.prop(item) : null,
                     rowData: item,
                     colSetting: col,
                     colTemplate: colTemplates[col.columnDef]

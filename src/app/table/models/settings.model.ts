@@ -55,7 +55,7 @@ export class ColumnSetting<T> implements IBaseSetting {
 	public rowSpan?: number = 1
 	public rowSpanFunc?: (rowData) => number 
 	/** Return data that display in table */
-	public data?: (data: T) => any;
+	public prop?: (data: T) => any;
 	/** Func return sort field data */
 	public sortBy?: (rowData: T) => any;
 
