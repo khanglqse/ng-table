@@ -45,7 +45,7 @@ export class ColumnSetting<T> implements IBaseSetting {
 	public css?: string;
 	public width?: string;
 	public height?: string;
-
+	public pinned? = false
 	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
 	public triggerExpandFunc?: (rowData: T) => boolean;
 	public triggerCloseExpanded? = true
@@ -55,12 +55,15 @@ export class ColumnSetting<T> implements IBaseSetting {
 	public rowSpan?: number = 1
 	public rowSpanFunc?: (rowData) => number 
 	/** Return data that display in table */
-	public prop?: (data: T) => any;
+	public prop?: (rowData: T) => any;
 	/** Func return sort field data */
 	public sortBy?: (rowData: T) => any;
 
 	constructor(setting: Partial<ColumnSetting<T>>) {
 		Object.assign(this, setting);
+		if(this.pinned && !this.width){
+			this.width = '100px'
+		}
 	}
 }
 export class RowSetting<T> implements IBaseSetting {

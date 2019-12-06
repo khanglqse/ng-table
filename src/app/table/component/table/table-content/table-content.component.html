@@ -1,16 +1,45 @@
-<div class="table-responsive">
+<div class="table-responsive" [style.width]="tableWidth">
   <table>
     <thead>
       <tr>
-        <ng-container *ngFor="let column of settings.columns; let i = index">
+          <ng-container *ngFor="let column of pinnedColumns; let i = index">
+              <th
+                class="{{ column.align }} {{ column.css }} pinned-column"
+                [attr.width]="column.width"
+                [style.marginLeft.px]="column.marginLeft"
+                (click)="sort(i, $event)"
+                [ngClass]="{
+                  sortable:
+                    column.sortable || (settings.sortable && column.sortable)
+                }"
+              >
+                <div class="flex">
+                  <span class="flex-fill">{{ column.title }}</span>
+                  <span
+                    *ngIf="sortState && sortState.index === i"
+                    class="sort-icon"
+                    >{{ sortState.order }}</span
+                  >
+                </div>
+              </th>
+            </ng-container>
+        <ng-container *ngFor="let column of normalColumns; let i = index">
           <th
-            class="{{column.align}} {{column.css}}" [attr.width]="column.width"
+            class="{{ column.align }} {{ column.css }}"
+            [attr.width]="column.width"
             (click)="sort(i, $event)"
-            [ngClass]="{ sortable: column.sortable || (settings.sortable && column.sortable)}"
+            [ngClass]="{
+              sortable:
+                column.sortable || (settings.sortable && column.sortable)
+            }"
           >
             <div class="flex">
               <span class="flex-fill">{{ column.title }}</span>
-              <span *ngIf="sortState && sortState.index === i" class="sort-icon">{{sortState.order}}</span>
+              <span
+                *ngIf="sortState && sortState.index === i"
+                class="sort-icon"
+                >{{ sortState.order }}</span
+              >
             </div>
           </th>
         </ng-container>
@@ -20,14 +49,24 @@
       </tr>
     </thead>
     <tbody #tbodyEl>
-      <ng-container *ngIf="!dataSource && (settings.showLoading && !isLoading)">
-        <tr >
-          <td class="text-center" [attr.colspan]="props.tableColSpan">No data available</td>
+      <ng-container *ngIf="!dataSource && settings.showLoading && !isLoading">
+        <tr>
+          <td class="text-center" [attr.colspan]="props.tableColSpan">
+            No data available
+          </td>
         </tr>
       </ng-container>
       <ng-container *ngIf="dataSource && dataSource.length > 0">
         <ng-container *ngFor="let item of dataSource; let i = index">
-          <tr (click)="tableRowClickHandler(item, tr)" #tr class="{{settings.rows && settings.rows.trCssFunc && settings.rows.trCssFunc(item)}}">
+          <tr
+            (click)="tableRowClickHandler(item, tr)"
+            #tr
+            class="{{
+              settings.rows &&
+                settings.rows.trCssFunc &&
+                settings.rows.trCssFunc(item)
+            }}"
+          >
             <!-- column content -->
             <ng-container *ngFor="let col of settings.columns">
               <ng-container
@@ -42,24 +81,23 @@
                 "
               >
               </ng-container>
-              
             </ng-container>
             <!-- action buttons -->
             <ng-container *ngIf="props.isHaveActionButtons">
-                <ng-container
-                  *ngTemplateOutlet="
-                    tbActions.actionButtonTemplate;
-                    context: {
-                      $implicit: item,
-                      buttons: settings.actionButtons.buttons
-                    }
-                  "
-                >
-                </ng-container>
+              <ng-container
+                *ngTemplateOutlet="
+                  tbActions.actionButtonTemplate;
+                  context: {
+                    $implicit: item,
+                    buttons: settings.actionButtons.buttons
+                  }
+                "
+              >
               </ng-container>
+            </ng-container>
           </tr>
           <!-- row total -->
-          <tr *ngIf="props.haveRowTotal"> 
+          <tr *ngIf="props.haveRowTotal">
             <ng-container *ngTemplateOutlet="rowTotalTemplate.templateRef">
             </ng-container>
           </tr>

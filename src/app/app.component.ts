@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
     this.settings = {
       header: { title: 'This is title' },
       columns: [
-        { title: 'No', prop: m => m.no.subProp, columnDef: 'no', align: 'text-left' },
-        { title: 'Name', prop: m => m.name, columnDef: 'name',colSpan: 2, colSpanFunc: (data) => {return 1}},
+        { title: 'No', prop: m => m.no.subProp, columnDef: 'no', align: 'text-left', pinned: true },
+        { title: 'Name', prop: m => m.name, columnDef: 'name',colSpan: 2, colSpanFunc: (data) => {return 1}, pinned: true},
         { title: 'Age', prop: m => m.age, columnDef: 'age'},
         { title: 'Title', prop: m => m.title, columnDef: 'title'},
         { title: 'Language', prop: m => m.language, columnDef: 'language'},
