@@ -1,14 +1,14 @@
-.table-header
-    background: blue
-    border-radius: 2px 2px 0 0
-    height: 20px
-    display: flex
-    align-items: center
-    justify-content: space-between
-    color: white
-    .title
-        font-size: 15px
-    .group-control
-        display: flex
-        align-items: center
-        
+:host
+    ::ng-deep
+        .table-header
+            margin-bottom: 16px
+            display: flex
+            align-items: center
+            justify-content: space-between
+            .group-control
+                display: flex
+                align-items: center
+                > *:not(:last-child)
+                    margin-right: 8px
+                button
+                    padding: 8px 12px

@@ -1,8 +1,11 @@
 <ng-table [isLoading]="loading" [settings]="settings" [filterModel$]="filterModel$"[dataSource]="data" (sortStateChange)="sortStateChange($event)" 
 (pagingOptionChange)="pagingOptionChange($event)">
+    <ng-template tableHeader>
+        User list
+    </ng-template>
     <ng-template tableHeaderControl>
-        <button (click)="onHeaderButtonClick()">1</button>
-        <button>2</button>
+        <button (click)="onHeaderButtonClick()">Add new</button>
+        <button>Export</button>
     </ng-template>
     <ng-template #column tableColumn for="no" let-data="rowData" let-triggerExpand="triggerExpand()" let-col="col">
         <div (click)="triggerExpand" style="background: gainsboro;">This is my custom column: {{data.no.subProp + data.age}}</div>

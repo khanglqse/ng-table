@@ -8,7 +8,11 @@ export interface IBaseSetting {
 	height?: string
 }
 
-export class TableSetting<T> {
+export class TableSetting<T> implements IBaseSetting {
+	public css?: string;
+	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-left';
+	public width?: string
+	public height?: string
 	public header?: IHeaderSetting;
 	public columns: Array<ColumnSetting<T>> = [];
 	public rows?: RowSetting<T>;
@@ -46,7 +50,7 @@ export class ColumnSetting<T> implements IBaseSetting {
 	public width?: string;
 	public height?: string;
 	public pinned? = false
-	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
+	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-left';
 	public triggerExpandFunc?: (rowData: T) => boolean;
 	public triggerCloseExpanded? = true
 	public triggerCloseExpandedFunc?: (rowData: T) => boolean
@@ -62,7 +66,7 @@ export class ColumnSetting<T> implements IBaseSetting {
 	constructor(setting: Partial<ColumnSetting<T>>) {
 		Object.assign(this, setting);
 		if(this.pinned && !this.width){
-			this.width = '100px'
+			this.width = '180px'
 		}
 	}
 }
@@ -71,7 +75,7 @@ export class RowSetting<T> implements IBaseSetting {
 	public css?: string;
 	public width?: string;
 	public height?: string;
-	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
+	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-left';
 
 	public triggerExpand?: boolean = false
 	public triggerExpandFunc?: (rowData: T) => boolean
@@ -88,7 +92,7 @@ export class ActionButtonSetting<T> implements IBaseSetting {
 	public css?: string;
 	public width?: string;
 	public height?: string;
-	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
+	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-left';
 
 	constructor(setting: Partial<ActionButtonSetting<T>>) {
 		Object.assign(this, setting);
@@ -109,7 +113,7 @@ export class ButtonSetting<T> implements IBaseSetting{
 	public width?: string;
 	public height?: string;
 
-	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-center';
+	public align?: 'text-left' | 'text-right' | 'text-center' = 'text-left';
 	/** Tooltip for disabled button when un-authorized */
 	public unAuthorizedMessage?= 'You may ask your Manager to update the settings';
 

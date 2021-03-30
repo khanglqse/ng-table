@@ -38,6 +38,7 @@ export class TableContentComponent implements OnInit, OnChanges, OnDestroy {
   pinnedColumns: any[];
   tableWidth: string;
   normalColumns: ColumnSetting<any>[];
+  pinnedColumnsWidth: any;
   constructor(
     private _appRef: ApplicationRef
   ) { }
@@ -56,16 +57,20 @@ export class TableContentComponent implements OnInit, OnChanges, OnDestroy {
   initPinnedColumnsSetting(){
     this.pinnedColumns = this.settings.columns.filter(m => m.pinned)
     this.normalColumns = this.settings.columns.filter(m => !m.pinned)
-    const pinnedColumnsWidth = this.pinnedColumns.reduce((pre, cur):number => pre + parseInt(cur.width), 0)
-    let marginLeft = 0
+    this.pinnedColumnsWidth = this.pinnedColumns.reduce((pre, cur):number => pre + parseInt(cur.width), 0)
+    let left = 0
     this.pinnedColumns.forEach((m, index) => {
-      marginLeft += parseInt(m.width)
-      if(index !== 0){
-        m.marginLeft = marginLeft
-      }
+      m.left = left
+      left += parseInt(m.width)
+
+      // if(index !== 0){
+      //   m.left = left
+      // } else {
+      //   m.left = 0
+      // }
     })
-    this.tableWidth = `calc(100% - ${pinnedColumnsWidth}px)`
-    console.table(this.pinnedColumns)
+    this.tableWidth = `calc(100% - ${this.pinnedColumnsWidth}px)`
+    console.table(this.pinnedColumnsWidth)
   }
   clearExpandedRow(){
     if(this.rowExpandTemplate && this.tbodyElement && this.tbodyElement.nativeElement){
