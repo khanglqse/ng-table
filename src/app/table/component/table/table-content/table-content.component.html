@@ -73,7 +73,7 @@
               }}"
             >
               <!-- column content -->
-              <ng-container *ngFor="let col of settings.columns">
+              <ng-container *ngFor="let col of pinnedColumns">
                 <ng-container
                   *ngTemplateOutlet="
                     tbColumn._columnTemplate;
@@ -81,7 +81,23 @@
                       $implicit: col.prop ? col.prop(item) : null,
                       rowData: item,
                       colSetting: col,
-                      colTemplate: colTemplates[col.columnDef]
+                      colTemplate: colTemplates[col.columnDef],
+                      isPinned: true
+                    }
+                  "
+                  >
+                </ng-container>
+              </ng-container>
+              <ng-container *ngFor="let col of normalColumns">
+                <ng-container
+                  *ngTemplateOutlet="
+                    tbColumn._columnTemplate;
+                    context: {
+                      $implicit: col.prop ? col.prop(item) : null,
+                      rowData: item,
+                      colSetting: col,
+                      colTemplate: colTemplates[col.columnDef],
+                      isPinned: false
                     }
                   "
                 >

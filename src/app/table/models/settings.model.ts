@@ -66,7 +66,7 @@ export class ColumnSetting<T> implements IBaseSetting {
 	constructor(setting: Partial<ColumnSetting<T>>) {
 		Object.assign(this, setting);
 		if(this.pinned && !this.width){
-			this.width = '180px'
+			this.width = '220px'
 		}
 	}
 }

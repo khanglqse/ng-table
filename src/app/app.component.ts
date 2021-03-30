@@ -25,16 +25,20 @@ export class AppComponent implements OnInit {
       align: 'text-left',
       header: { title: 'This is title' },
       columns: [
-        { title: 'No', prop: m => m.no.subProp, columnDef: 'no', align: 'text-left', width: '230px'},
-        { title: 'Name', prop: m => m.name, columnDef: 'name',colSpan: 2, colSpanFunc: (data) => {return 1}},
+        { title: 'No', prop: m => m.no.subProp, columnDef: 'no',  align: 'text-left', width: '230px'},
+        { title: 'Name', prop: m => m.name, width: '150', columnDef: 'name', pinned: true, colSpan: 2, colSpanFunc: (data) => {return 1}},
         { title: 'Age', prop: m => m.age, columnDef: 'age'},
         { title: 'Title', prop: m => m.title, columnDef: 'title'},
         { title: 'Language', prop: m => m.language, columnDef: 'language'},
+        { title: 'Language', prop: m => m.language, columnDef: 'language'},
+        { title: 'Language', prop: m => m.language, columnDef: 'language'},
+        { title: 'Language', prop: m => m.language, columnDef: 'language'},
+        { title: 'Language', prop: m => m.language, pinned: true, columnDef: 'language'},
         { title: 'Board date', prop: m => m.joinDate, columnDef: 'joinDate', type: 'datetime', dateTimeFormat: 'long'},
       ],
       rows: {
         trCssFunc: (data) => { return (data.name === 'khang' ? 'handsome-class' : 'not-handsome'); },
-        // triggerExpand: true
+        triggerExpand: true
       },
       actionButtons: {
         buttons: [
