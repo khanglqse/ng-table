@@ -22,9 +22,10 @@ export class AppComponent implements OnInit {
 
   private initTableSettings() {
     this.settings = {
+      align: 'text-left',
       header: { title: 'This is title' },
       columns: [
-        { title: 'No', prop: m => m.no.subProp, columnDef: 'no', align: 'text-left' },
+        { title: 'No', prop: m => m.no.subProp, columnDef: 'no', align: 'text-left', width: '230px'},
         { title: 'Name', prop: m => m.name, columnDef: 'name',colSpan: 2, colSpanFunc: (data) => {return 1}},
         { title: 'Age', prop: m => m.age, columnDef: 'age'},
         { title: 'Title', prop: m => m.title, columnDef: 'title'},
@@ -36,8 +37,6 @@ export class AppComponent implements OnInit {
         // triggerExpand: true
       },
       actionButtons: {
-
-        align: 'text-center',
         buttons: [
           { tooltip: 'khang', icon: 'fa', title: 'Edit test',  actionLinkFunc: (data) => this.checkActionLink(data) },
           { tooltip: 'khang', icon: 'fa', title: 'delete test', action: (data) => this.deleteRecord(data) },
@@ -47,6 +46,7 @@ export class AppComponent implements OnInit {
       // pagination: false
     };
   }
+
   isDisabled(data){
     return data.no.subProp === 2
   }
@@ -59,9 +59,9 @@ export class AppComponent implements OnInit {
     if(data.name === 'khang'){
       return ['view1', data.name] 
     }
-    return ['view2', data.no.sub]
+    return ['view2', data.no.subProp]
   }
-  pre
+
   sortStateChange(e){
     console.log(e)
   }
@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
 
 const testData = [
   {no: {subProp: 1}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
-  {no: {subProp: 2}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date() },
+  {no: {subProp: 2}, name:'a', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date() },
   {no: {subProp: 3}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date() },
   {no: {subProp: 4}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date() },
   {no: {subProp: 5}, name:'khang', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date() },

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, ApplicationRef, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, ViewRef } from '@angular/core';
-import { TableSetting, TableProps } from 'src/app/table/models/settings.model';
+import { TableSetting, TableProps, ColumnSetting } from 'src/app/table/models/settings.model';
 import { SortState, SortOrder } from 'src/app/table/models/sort-order.model';
 import { TableColumnComponent } from '../column/table-column.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
@@ -35,6 +35,10 @@ export class TableContentComponent implements OnInit, OnChanges, OnDestroy {
   sortOrder = SortOrder;
 
   private _unsubscribe$ = new Subject<void>()
+  pinnedColumns: any[];
+  tableWidth: string;
+  normalColumns: ColumnSetting<any>[];
+  pinnedColumnsWidth: any;
   constructor(
     private _appRef: ApplicationRef
   ) { }
@@ -46,6 +50,27 @@ export class TableContentComponent implements OnInit, OnChanges, OnDestroy {
     if(changes.dataSource && changes.dataSource.currentValue){
       this.clearExpandedRow()
     }
+    if(changes.settings && changes.settings.currentValue){
+      this.initPinnedColumnsSetting()
+    }
+  }
+  initPinnedColumnsSetting(){
+    this.pinnedColumns = this.settings.columns.filter(m => m.pinned)
+    this.normalColumns = this.settings.columns.filter(m => !m.pinned)
+    this.pinnedColumnsWidth = this.pinnedColumns.reduce((pre, cur):number => pre + parseInt(cur.width), 0)
+    let left = 0
+    this.pinnedColumns.forEach((m, index) => {
+      m.left = left
+      left += parseInt(m.width)
+
+      // if(index !== 0){
+      //   m.left = left
+      // } else {
+      //   m.left = 0
+      // }
+    })
+    this.tableWidth = `calc(100% - ${this.pinnedColumnsWidth}px)`
+    console.table(this.pinnedColumnsWidth)
   }
   clearExpandedRow(){
     if(this.rowExpandTemplate && this.tbodyElement && this.tbodyElement.nativeElement){
