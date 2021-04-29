@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  data = []
+  data
   title = 'table';
   settings: TableSetting<any>
   loading: boolean;
@@ -20,6 +20,12 @@ export class AppComponent implements OnInit {
     this.initTableSettings();
   }
 
+  getAge(values) {
+    if(values.name === 'a') {
+      return `this is function which return value + 5 ${parseInt(values.age) + 5}`
+    }
+    return values.age;
+  }
   private initTableSettings() {
     this.settings = {
       align: 'text-left',
@@ -27,7 +33,7 @@ export class AppComponent implements OnInit {
       columns: [
         { title: 'No', prop: m => m.no.subProp, columnDef: 'no', align: 'text-left', width: '230px'},
         { title: 'Name', prop: m => m.name, columnDef: 'name',colSpan: 2, colSpanFunc: (data) => {return 1}},
-        { title: 'Age', prop: m => m.age, columnDef: 'age'},
+        { title: 'Age', prop: m => this.getAge(m), columnDef: 'age'},
         { title: 'Title', prop: m => m.title, columnDef: 'title'},
         { title: 'Language', prop: m => m.language, columnDef: 'language'},
         { title: 'Board date', prop: m => m.joinDate, columnDef: 'joinDate', type: 'datetime', dateTimeFormat: 'long'},
@@ -52,7 +58,7 @@ export class AppComponent implements OnInit {
   }
 
   deleteRecord(data){
-    this.data = this.data.filter(i => i.no.subProp !== data.no.subProp);
+    this.data.data = this.data.filter(i => i.no.subProp !== data.no.subProp);
   }
 
   checkActionLink(data){
@@ -66,7 +72,7 @@ export class AppComponent implements OnInit {
     console.log(e)
   }
   pagingOptionChange(e){
-    this.data =  [
+    this.data.data =  [
       {no: {subProp: 1}, name:'teo', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
       {no: {subProp: 1}, name:'teo', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
       {no: {subProp: 1}, name:'teo', age: '17', title: 'Senior dev', language: 'C#, Angular, React, Sails js', joinDate: new Date()},
@@ -82,7 +88,7 @@ export class AppComponent implements OnInit {
   getData(){
     this.loading = true;
     setTimeout(() => {
-      this.data = testData;
+      this.data = {data:testData};
       this.loading = false
     }, 1000)
   }

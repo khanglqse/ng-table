@@ -1,0 +1,116 @@
+<div class="table-wrapper">
+  <div
+    class="table-responsive"
+    [style.width]="tableWidth"
+    [style.marginLeft.px]="pinnedColumnsWidth"
+  >
+    <table class="table">
+      <thead>
+        <tr>
+          <ng-container *ngFor="let column of pinnedColumns; let i = index">
+            <th
+              class="{{ column.align }} {{ column.css }} pinned-column"
+              [attr.width]="column.width"
+              [style.left.px]="column.left"
+              (click)="sort(i, $event)"
+              [ngClass]="{
+                sortable:
+                  column.sortable || (settings.sortable && column.sortable)
+              }"
+            >
+              <div class="flex">
+                <span class="flex-fill">{{ column.title }}</span>
+                <span
+                  *ngIf="sortState && sortState.index === i"
+                  class="sort-icon"
+                  >{{ sortState.order }}</span
+                >
+              </div>
+            </th>
+          </ng-container>
+          <ng-container *ngFor="let column of normalColumns; let i = index">
+            <th
+              class="{{ column.align }} {{ column.css }}"
+              [attr.width]="column.width"
+              (click)="sort(i, $event)"
+              [ngClass]="{
+                sortable:
+                  column.sortable || (settings.sortable && column.sortable)
+              }"
+            >
+              <div class="flex">
+                <span class="flex-fill">{{ column.title }}</span>
+                <span
+                  *ngIf="sortState && sortState.index === i"
+                  class="sort-icon"
+                  >{{ sortState.order }}</span
+                >
+              </div>
+            </th>
+          </ng-container>
+          <ng-container *ngIf="props.isHaveActionButtons">
+            <th>{{ settings.actionButtons.title || "Actions" }}</th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody #tbodyEl>
+        <ng-container *ngIf="!dataSource && settings.showLoading && !isLoading">
+          <tr>
+            <td class={{settings.align}} [attr.colspan]="props.tableColSpan">
+              No data available
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="dataSource && dataSource.length > 0">
+          <ng-container *ngFor="let item of dataSource; let i = index">
+            <tr
+              (click)="tableRowClickHandler(item, tr, false)"
+              #tr
+              class="{{
+                settings.rows &&
+                  settings.rows.trCssFunc &&
+                  settings.rows.trCssFunc(item)
+              }}"
+            >
+              <!-- column content -->
+              <ng-container *ngFor="let col of settings.columns">
+                <ng-container
+                  *ngTemplateOutlet="
+                    tbColumn._columnTemplate;
+                    context: {
+                      $implicit: col.prop ? col.prop(item) : null,
+                      rowData: item,
+                      colSetting: col,
+                      colTemplate: colTemplates[col.columnDef]
+                    }
+                  "
+                >
+                </ng-container>
+              </ng-container>
+              <!-- action buttons -->
+              <ng-container *ngIf="props.isHaveActionButtons">
+                <ng-container
+                  *ngTemplateOutlet="
+                    tbActions.actionButtonTemplate;
+                    context: {
+                      $implicit: item,
+                      buttons: settings.actionButtons.buttons
+                    }
+                  "
+                >
+                </ng-container>
+              </ng-container>
+            </tr>
+            <!-- row total -->
+            <tr *ngIf="props.haveRowTotal">
+              <ng-container *ngTemplateOutlet="rowTotalTemplate.templateRef">
+              </ng-container>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+
+      <!-- table footer -->
+    </table>
+  </div>
+</div>

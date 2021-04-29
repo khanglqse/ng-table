@@ -1,0 +1,45 @@
+:host
+    ::ng-deep
+        .flex
+            display: flex !important
+        .flex-fill
+            flex: 1 1 auto !important
+        table
+            width: 100%
+            text-align: left
+            border-radius: 2px 2px 0 0
+            border-collapse: separate
+            border-spacing: 0
+            th, td
+                border-collapse: collapse
+                padding: 10px
+                text-shadow: 1px 1px 1px #fff
+                white-space: nowrap
+                border-collapse: separate
+                position: relative
+                padding: 16px
+                overflow-wrap: break-word
+                border-bottom: 1px solid #f0f0f0
+        table
+            width: 100%
+        .text-right
+            text-align: right
+        .text-center
+            text-align: center
+        .text-left
+            text-align: left
+        .disabled
+            color: white
+            background-color: grey
+
+.ng-table-container
+    position: relative
+    .table-loading
+        position: absolute
+        background: grey
+        z-index: 1
+        top: 50%
+        left: 50%
+    .main-container
+        &.loading
+            opacity: 0.7

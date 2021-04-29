@@ -74,6 +74,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   >;
 
   @Input() settings: TableSetting<any>;
+  @Input() totalCount: number;
   @Input() dataSource: any[];
   @Input() url: string;
   @Input() isLoading: boolean;

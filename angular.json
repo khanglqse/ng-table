@@ -124,6 +124,41 @@
           }
         }
       }
+    },
+    "ng-table": {
+      "projectType": "library",
+      "root": "projects/ng-table",
+      "sourceRoot": "projects/ng-table/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ng-table/tsconfig.lib.json",
+            "project": "projects/ng-table/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-table/src/test.ts",
+            "tsConfig": "projects/ng-table/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-table/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-table/tsconfig.lib.json",
+              "projects/ng-table/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "table"
 }

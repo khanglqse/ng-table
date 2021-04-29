@@ -30,6 +30,9 @@ const routes: Routes  = [
     ActionButtonComponent,
     TableHeaderComponent,
     TableColumnComponent,
+    TableContentComponent,
+    TableNavigationComponent,
+    OtherComponnetComponent,
     TableHeaderTemplate,
     TableHeaderControlTemplate,
     TableColumnTemplate,
@@ -37,9 +40,6 @@ const routes: Routes  = [
     TableFooterTemplate,
     TableActionButtonTemplate,
     TableRowTotalTemplate,
-    TableContentComponent,
-    TableNavigationComponent,
-    OtherComponnetComponent
   ],
   imports: [
     BrowserModule,
