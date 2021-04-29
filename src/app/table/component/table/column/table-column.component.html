@@ -4,6 +4,7 @@
   let-rowData="rowData"
   let-colSetting="colSetting"
   let-colTemplate="colTemplate"
+  let-isPinned="isPinned"
 >
   <ng-container #tRow
     *ngTemplateOutlet="
@@ -12,7 +13,8 @@
         $implicit: colData,
         rowData: rowData,
         colSetting: colSetting,
-        colTemplate: colTemplate
+        colTemplate: colTemplate,
+        isPinned: isPinned
       }
     "
   ></ng-container>
@@ -23,12 +25,13 @@
   let-colSetting="colSetting"
   let-rowData="rowData"
   let-colTemplate="colTemplate"
+  let-isPinned="isPinned"
 >
   <td #td
   
     [attr.width]="colSetting.width"
     [style.left.px]="colSetting.left"
-    [ngClass]="{'pinned-column': colSetting.pinned}"
+    [ngClass]="{'pinned-column': isPinned}"
     class="{{ colSetting.css }}">
     <i class="expand-control mdi mdi-menu-right text-big"></i>
     <div class="{{ colSetting.align }}">
@@ -53,6 +56,7 @@
   let-colData=""
   let-colSetting="colSetting"
   let-rowData="rowData"
+  let-isPinned="isPinned"
 >
   <ng-container [ngSwitch]="colSetting.type">
     <!-- {{(colSetting.colSpanFunc && colSetting.colSpanFunc(rowData))}} -->
@@ -60,7 +64,7 @@
     <td class="{{ colSetting.css }}"
     [attr.width]="colSetting.width"
     [style.left.px]="colSetting.left"
-    [ngClass]="{'pinned-column': colSetting.pinned}"
+    [ngClass]="{'pinned-column': isPinned}"
     [attr.colSpan] ="(colSetting.colSpanFunc && colSetting.colSpanFunc(rowData)) || colSetting.colSpan"
     [attr.rowSpan] ="(colSetting.rowSpanFunc && colSetting.rowSpanFunc(rowData)) || colSetting.rowSpan" >
       <div class="d-flex">

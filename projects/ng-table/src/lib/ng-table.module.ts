@@ -18,6 +18,7 @@ import { TableContentComponent } from "./table/table-content/table-content.compo
 import { TableNavigationComponent } from "./table/navigation/table-navigation.component";
 import { FormsModule } from "@angular/forms";
 import { NgTableComponent } from "./table/table.component";
+import { CommonModule } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { NgTableComponent } from "./table/table.component";
     TableContentComponent,
     TableNavigationComponent,
   ],
-  imports: [BrowserModule, RouterModule, HttpClientModule, FormsModule],
+  imports: [BrowserModule, CommonModule, RouterModule, HttpClientModule, FormsModule],
   exports: [
     NgTableComponent,
     TableHeaderTemplate,
