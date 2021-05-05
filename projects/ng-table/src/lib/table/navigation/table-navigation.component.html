@@ -1,14 +1,14 @@
 <div class="container">
     <span>Show</span>
-    <select (change)="handlePageSizeChange($event)" name="pageSize">
+    <select [(ngModel)]="pagingOptions.pageSize" (change)="handlePageSizeChange($event)" name="pageSize">
         <option value="5">5 rows</option>
         <option value="10">10 rows</option>
         <option value="20">20 rows</option>
         <option value="50">50 rows</option>
         <option value="100">100 rows</option>
     </select>
-    <button (click)="onPreviousClick()">Previous</button>
+    <span [ngClass]="{'icon-disabled': pagingOptions.pageNumber === 1}" class="arrow left" (click)="onPreviousClick()"></span>
     <input type="number" [(ngModel)]="pagingOptions.pageNumber" (change)="handlePageChange($event)" />
     <span>of {{totalPage}}</span>
-    <button (click)="onNextClick()">Next</button>
+    <span [ngClass]="{'icon-disabled': pagingOptions.pageNumber === totalPage}" class="arrow right" (click)="onNextClick()"></span>
 </div>

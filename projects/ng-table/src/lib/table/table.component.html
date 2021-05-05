@@ -1,11 +1,7 @@
 <!-- <ng-table-column [settings]="settings"></ng-table-column> -->
 
 <div class="ng-table-container">
-    <div *ngIf="isLoading" class="table-loading">
-        <div class="loading-spinner">
-            <i>Refresh icon go here</i>
-        </div>
-    </div>
+    
     <div class="main-container" [ngClass]="{'loading': isLoading}">
         <!-- injected template  -->
         <ng-table-header *ngIf="props.isHaveHeader" [headerControlTemplate]="headerControlTemplate" [headerTemplate]="headerTemplate" [settings]="settings"></ng-table-header>
@@ -19,6 +15,9 @@
             (changeOrderState)="handleOrderStateChange($event)" [rowExpandTemplate]="rowExpandTemplate"
             > 
         </ng-table-content>
+        <div class="flex justify-content-center">
+            <span *ngIf="isLoading" class="loading-spinner"></span>
+        </div>
         <!-- table footeer -->
         <div class="table-footer" *ngIf="footerTemplate && footerTemplate.templateRef">
             <ng-container *ngTemplateOutlet="footerTemplate.templateRef"></ng-container>

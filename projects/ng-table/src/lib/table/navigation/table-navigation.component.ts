@@ -7,7 +7,7 @@ import { PagingSetting } from "../../models/settings.model";
   styleUrls: ["./table-navigation.component.sass"],
 })
 export class TableNavigationComponent implements OnInit {
-  totalPage
+  totalPage;
   @Input() totalCount: number;
   pagingOptions = new PagingSetting();
   @Output()
@@ -15,33 +15,36 @@ export class TableNavigationComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.totalPage = Math.ceil(this.totalCount/this.pagingOptions.pageSize) + 1
+    this.totalPage =
+      Math.ceil(this.totalCount / this.pagingOptions.pageSize) + 1;
   }
 
   ngOnChange() {
-    this.totalPage = Math.ceil(this.totalCount/this.pagingOptions.pageSize) + 1
+    this.totalPage =
+      Math.ceil(this.totalCount / this.pagingOptions.pageSize) + 1;
   }
   onPreviousClick() {
-    if(this.pagingOptions.pageNumber === 1){
-      return
-    }
-    this.pagingOptions.pageNumber -=1
+    if (this.pagingOptions.pageIndex === 0) return
+    this.pagingOptions.pageNumber -= 1;
+    this.pagingOptions.pageIndex -= 1;
     this.change.emit(this.pagingOptions);
   }
 
   onNextClick() {
-    this.pagingOptions.pageNumber +=1
+    if (this.pagingOptions.pageNumber === this.totalPage) return
+    this.pagingOptions.pageNumber += 1;
+    this.pagingOptions.pageIndex += 1;
     this.change.emit(this.pagingOptions);
   }
 
   handlePageChange(event) {
-    this.pagingOptions.pageNumber = event.target.value
-    this.pagingOptions.pageIndex = event.target.value -1
-    this.change.emit(this.pagingOptions)
+    this.pagingOptions.pageNumber = event.target.value;
+    this.pagingOptions.pageIndex = event.target.value - 1;
+    this.change.emit(this.pagingOptions);
   }
 
   handlePageSizeChange(event) {
-    this.pagingOptions.pageSize = event.target.value
-    this.change.emit(this.pagingOptions)
+    this.pagingOptions.pageSize = event.target.value;
+    this.change.emit(this.pagingOptions);
   }
 }

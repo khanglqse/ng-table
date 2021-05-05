@@ -36,7 +36,13 @@ import { CommonModule } from "@angular/common";
     TableContentComponent,
     TableNavigationComponent,
   ],
-  imports: [BrowserModule, CommonModule, RouterModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    RouterModule,
+    HttpClientModule,
+    FormsModule,
+  ],
   exports: [
     NgTableComponent,
     TableHeaderTemplate,

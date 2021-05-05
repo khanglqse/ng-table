@@ -12,7 +12,9 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
-  ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  OnDestroy,
 } from "@angular/core";
 import {
   TableActionButtonTemplate,
@@ -21,13 +23,17 @@ import {
   TableHeaderControlTemplate,
   TableFooterTemplate,
   TableRowTotalTemplate,
-  TableRowExpandTemplate
+  TableRowExpandTemplate,
 } from "../directive/table-directive.directive";
-import { TableSetting, PagingSetting, TableProps } from "../models/settings.model";
+import {
+  TableSetting,
+  PagingSetting,
+  TableProps,
+} from "../models/settings.model";
 import { Observable, Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { SortState } from "../models/sort-order.model";
-import { takeUntil } from 'rxjs/operators'
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "ng-table",
@@ -36,7 +42,6 @@ import { takeUntil } from 'rxjs/operators'
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgTableComponent implements OnInit, OnChanges, OnDestroy {
-
   @ContentChild(TableActionButtonTemplate, { static: false })
   public actBtnTemplate: TableActionButtonTemplate;
   @ContentChild(TableHeaderControlTemplate, { static: true })
@@ -44,7 +49,6 @@ export class NgTableComponent implements OnInit, OnChanges, OnDestroy {
 
   @ContentChild(TableHeaderTemplate, { static: true })
   public headerTemplate: TableHeaderTemplate;
-
 
   @ContentChild(TableFooterTemplate, { static: false })
   public footerTemplate: TableFooterTemplate;
@@ -56,7 +60,7 @@ export class NgTableComponent implements OnInit, OnChanges, OnDestroy {
   public rowExpandTemplate: TableRowExpandTemplate;
 
   public colTemplates: { [key: string]: TableColumnTemplate } = {};
-  columnTriggerExpand$ = new Subject;
+  columnTriggerExpand$ = new Subject();
 
   @ContentChildren(TableColumnTemplate)
   set setColumnTemplates(columnTemplates: Array<TableColumnTemplate>) {
@@ -65,43 +69,43 @@ export class NgTableComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    columnTemplates.forEach(temp => {
+    columnTemplates.forEach((temp) => {
       this.colTemplates[temp.for] = temp;
     });
-  };
-  @ViewChild("tbodyElement", { static: true }) tbodyElement: ElementRef<
-    HTMLElement
-  >;
+  }
+  @ViewChild("tbodyElement", { static: true })
+  tbodyElement: ElementRef<HTMLElement>;
 
   @Input() settings: TableSetting<any>;
   @Input() totalCount: number;
   @Input() dataSource: any[];
   @Input() url: string;
   @Input() isLoading: boolean;
-  @Input() filterModel$: Observable<any>
+  @Input() filterModel$: Observable<any>;
   @Input() dataPropName = "data";
   @Input() method = "get";
-  @Input() sortState$: Observable<SortState>
+  @Input() sortState$: Observable<SortState>;
 
-  @Output() pagingOptionChange: EventEmitter<PagingSetting> = new EventEmitter<PagingSetting>();
-  @Output() sortStateChange: EventEmitter<SortState> = new EventEmitter<SortState>();
+  @Output()
+  pagingOptionChange: EventEmitter<PagingSetting> = new EventEmitter<PagingSetting>();
+  @Output()
+  sortStateChange: EventEmitter<SortState> = new EventEmitter<SortState>();
 
-
-  pagingOptions: PagingSetting = new PagingSetting()
-  props: TableProps = new TableProps()
-  filterModel: any = {}
+  pagingOptions: PagingSetting = new PagingSetting();
+  props: TableProps = new TableProps();
+  filterModel: any = {};
   sortState: SortState = new SortState();
 
-  private _unsubscribe$ = new Subject<void>()
+  private _unsubscribe$ = new Subject<void>();
   constructor(
     private _appRef: ApplicationRef,
     private _httpClient: HttpClient,
     private _cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initSettings();
-    this.registerObserver()
+    this.registerObserver();
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes.dataSource && changes.dataSource.currentValue) {
@@ -109,43 +113,55 @@ export class NgTableComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   registerObserver() {
-    if(this.filterModel$){
-      this.filterModel$.pipe(takeUntil(this._unsubscribe$)).subscribe(filter => {
-        this.filterModel = filter
-        this.shouldFetchData() && this.fetchData()
-      })
+    if (this.filterModel$) {
+      this.filterModel$
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((filter) => {
+          this.filterModel = filter;
+          this.shouldFetchData() && this.fetchData();
+        });
     }
-    if(this.sortState$){
-      this.sortState$.pipe(takeUntil(this._unsubscribe$)).subscribe(sortState => {
-        this.sortState = sortState
-        this.shouldFetchData() && this.fetchData()
-      })
+    if (this.sortState$) {
+      this.sortState$
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((sortState) => {
+          this.sortState = sortState;
+          this.shouldFetchData() && this.fetchData();
+        });
     }
   }
   shouldFetchData() {
-    return this.url
+    return this.url;
   }
   fetchData() {
-    const model = { ...this.filterModel, ...this.pagingOptions, ...this.sortState }
-    this.isLoading = true
+    const model = {
+      ...this.filterModel,
+      ...this.pagingOptions,
+      ...this.sortState,
+    };
+    this.isLoading = true;
     this._httpClient.get(this.url, { params: model }).subscribe((res: any) => {
-      this.dataSource = res[this.dataPropName]
-      this.isLoading = false
+      this.dataSource = res[this.dataPropName];
+      this.isLoading = false;
     });
   }
+
   initSettings() {
-    this.settings = new TableSetting(this.settings)
-    this.initInternalProps()
+    this.settings = new TableSetting(this.settings);
+    this.initInternalProps();
     this.validateInitConfiguration();
-    console.log(this.dataSource)
   }
 
   initInternalProps() {
-    this.props.isHaveHeader = this.settings && this.settings.header
-    this.props.sortable = this.settings && this.settings.sortable
-    this.props.isHaveActionButtons = this.settings && this.settings.actionButtons && this.settings.actionButtons.buttons && this.settings.actionButtons.buttons.length > 0;
-    this.props.tableColSpan = this.settings.columns.length + 1
-    this.props.haveRowTotal = this.rowTotalTemplate ? true : false
+    this.props.isHaveHeader = this.settings && this.settings.header;
+    this.props.sortable = this.settings && this.settings.sortable;
+    this.props.isHaveActionButtons =
+      this.settings &&
+      this.settings.actionButtons &&
+      this.settings.actionButtons.buttons &&
+      this.settings.actionButtons.buttons.length > 0;
+    this.props.tableColSpan = this.settings.columns.length + 1;
+    this.props.haveRowTotal = this.rowTotalTemplate ? true : false;
     // console.table(this.props)
   }
 
@@ -163,27 +179,27 @@ export class NgTableComponent implements OnInit, OnChanges, OnDestroy {
   }
   handleOrderStateChange(sortState: SortState) {
     // this.resetPagingOption()
-    this.sortState = sortState
-    this.sortStateChange.emit(sortState)
-    this.shouldFetchData() && this.fetchData()
+    this.sortState = sortState;
+    this.sortStateChange.emit(sortState);
+    this.shouldFetchData() && this.fetchData();
   }
   onPagingOptionChange(pagingOptions: PagingSetting) {
-    this.pagingOptions = pagingOptions
-    this.pagingOptionChange.emit(pagingOptions)
-    this.shouldFetchData() && this.fetchData()
+    this.pagingOptions = pagingOptions;
+    this.pagingOptionChange.emit(pagingOptions);
+    this.shouldFetchData() && this.fetchData();
   }
   resetOrderState() {
-    this.sortState = new SortState()
+    this.sortState = new SortState();
   }
   resetPagingOption() {
-    this.pagingOptions = new PagingSetting()
+    this.pagingOptions = new PagingSetting();
   }
 
-  handleColumnTriggerExpand(eleObj){
-    this.columnTriggerExpand$.next(eleObj)
+  handleColumnTriggerExpand(eleObj) {
+    this.columnTriggerExpand$.next(eleObj);
   }
   ngOnDestroy() {
-    this._unsubscribe$.next()
-    this._unsubscribe$.complete()
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 }

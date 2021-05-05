@@ -12,19 +12,22 @@
               class="{{ column.align }} {{ column.css }} pinned-column"
               [attr.width]="column.width"
               [style.left.px]="column.left"
-              (click)="sort(i, $event)"
+              (click)="sort(column, $event)"
               [ngClass]="{
                 sortable:
                   column.sortable || (settings.sortable && column.sortable)
               }"
             >
-              <div class="flex">
+              <div class="flex align-center justify-content-between">
                 <span class="flex-fill">{{ column.title }}</span>
                 <span
-                  *ngIf="sortState && sortState.index === i"
-                  class="sort-icon"
-                  >{{ sortState.order }}</span
-                >
+                  *ngIf="
+                    sortState.columnDef &&
+                    sortState.columnDef === column.columnDef
+                  "
+                  class="pinned"
+                  [ngClass]="sortState.order === 1 ? 'arrow up' : 'arrow down'"
+                ></span>
               </div>
             </th>
           </ng-container>
@@ -32,19 +35,21 @@
             <th
               class="{{ column.align }} {{ column.css }}"
               [attr.width]="column.width"
-              (click)="sort(i, $event)"
+              (click)="sort(column, $event)"
               [ngClass]="{
                 sortable:
                   column.sortable || (settings.sortable && column.sortable)
               }"
             >
-              <div class="flex">
+              <div class="flex align-center justify-content-between">
                 <span class="flex-fill">{{ column.title }}</span>
                 <span
-                  *ngIf="sortState && sortState.index === i"
-                  class="sort-icon"
-                  >{{ sortState.order }}</span
-                >
+                  *ngIf="
+                    sortState.columnDef &&
+                    sortState.columnDef === column.columnDef
+                  "
+                  [ngClass]="sortState.order === 1 ? 'arrow up' : 'arrow down'"
+                ></span>
               </div>
             </th>
           </ng-container>
@@ -56,7 +61,10 @@
       <tbody #tbodyEl>
         <ng-container *ngIf="!dataSource && settings.showLoading && !isLoading">
           <tr>
-            <td class={{settings.align}} [attr.colspan]="props.tableColSpan">
+            <td
+              class="text-center"
+              [attr.colspan]="props.tableColSpan"
+            >
               No data available
             </td>
           </tr>
@@ -85,7 +93,7 @@
                       isPinned: true
                     }
                   "
-                  >
+                >
                 </ng-container>
               </ng-container>
               <ng-container *ngFor="let col of normalColumns">

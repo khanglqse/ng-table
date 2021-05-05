@@ -1,8 +1,10 @@
 :host
     float: right
     .container
+        display: flex
+        align-items: center
         > *
-            margin-left: 8px
+            margin-left: 12px
     select
         height: 22px
         min-width: 44px
@@ -10,3 +12,7 @@
     input
         height: 15px
         width: 50px
+    .icon-disabled
+        border-color: grey
+        &:hover
+            cursor: not-allowed

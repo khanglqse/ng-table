@@ -1,9 +1,62 @@
 :host
     ::ng-deep
+        .align-center
+            align-items: center
+        .justify-content-between
+            justify-content: space-between
+        .justify-content-center
+            justify-content: center
+        .arrow
+            border: solid black
+            border-width: 0 2px 2px 0
+            display: inline-block
+            padding: 2px
+            &:hover
+                cursor: pointer
+        .right
+            transform: rotate(-45deg)
+            -webkit-transform: rotate(-45deg)
+
+
+        .left
+            transform: rotate(135deg)
+            -webkit-transform: rotate(135deg)
+
+
+        .up
+            transform: rotate(-135deg)
+            -webkit-transform: rotate(-135deg)
+        .down
+            transform: rotate(45deg)
+            -webkit-transform: rotate(45deg)
         .flex
             display: flex !important
         .flex-fill
             flex: 1 1 auto !important
+        .loading-spinner
+            border: 2px solid #f3f3f3
+            border-radius: 50%
+            border-top: 2px solid #3498db
+            width: 20px
+            height: 20px
+            -webkit-animation: spin 2s linear
+            animation: spin 2s linear infinite
+            margin: 8px
+           
+
+        @-webkit-keyframes spin
+            0%
+             -webkit-transform: rotate(0deg)
+            100%
+             -webkit-transform: rotate(360deg)
+       
+
+        @keyframes spin
+            0%
+             transform: rotate(0deg)
+            100%
+             transform: rotate(360deg)
+       
         table
             width: 100%
             text-align: left
@@ -25,7 +78,7 @@
         .text-right
             text-align: right
         .text-center
-            text-align: center
+            text-align: center !important
         .text-left
             text-align: left
         .disabled
@@ -43,3 +96,4 @@
     .main-container
         &.loading
             opacity: 0.7
+
